@@ -1,8 +1,13 @@
 <?php
+session_start();
+if(isset($_SESSION['account'])){
+    header('Location: index.php');
+    exit();
+}
+
 require('php/recaptcha_valid.php');
 $client_IP = $_SERVER['REMOTE_ADDR'];
 
-SESSION_start();
     if(isset($_POST['email'], $_POST['password'], $_POST['g-recaptcha-response'])){
         if(!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)){
             $errors[] = 'Email non valide';
