@@ -40,19 +40,22 @@ if(isset($_POST['DeleteArticles'])){
     <title>Document</title>
 </head>
 <body>
-    <?php if($admin){?>
+    <?php 
+    include 'php/menu.php';
+    if($admin){?>
 <form action="AdminDelete.php" method="POST">
     <input type="text" name="DeleteArticles" placeholder="Entrer un numéro d'articles pour le supprimer">
     <input type="submit" name="delete" value="Delete">
 </form>
 
     <?php
-    if($errors){
+    if(isset($errors)){
         foreach($errors as $error){
             echo $error;
         }
-    } else {
-        $success;
+    } 
+    if (isset($succes)){
+        echo $succes;
     }
 } ?>
     

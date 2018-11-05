@@ -26,17 +26,16 @@ $showArticle= $getArticle->fetch(PDO::FETCH_ASSOC);
     <title>Document</title>
 </head>
 <body>
-    <nav>
     <?php
     include 'php/menu.php';
     ?>
-    </nav>
 
     <main>
         <h1><?php echo htmlspecialchars($showArticle['title'])?></h1>
         <p><?php echo htmlspecialchars($showArticle['content'])?></p>
         <p><?php echo htmlspecialchars($showArticle['author_id'])?></p>
-        <p><?php echo htmlspecialchars($showArticle['creation_date'])?></p>
+        <p><?php echo date('m-d-Y', htmlspecialchars($showArticle['creation_date']))?></p>
+        <a href="pagination.php?page=1">Retour</a>
     </main>
 </body>
 </html>
