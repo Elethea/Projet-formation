@@ -1,4 +1,5 @@
 <?php
+session_start();
 $articlesPerPage = 10;
 
 if(isset($_GET['page']) AND filter_var($_GET['page'], FILTER_VALIDATE_INT) AND $_GET['page'] >= 1){

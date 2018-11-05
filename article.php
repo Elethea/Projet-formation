@@ -1,4 +1,5 @@
 <?php
+session_start();
 if(isset($_GET['id']) AND filter_var($_GET['id'], FILTER_VALIDATE_INT) AND $_GET['id'] >= 1){
     $articleId = $_GET['id'];
 } else {
