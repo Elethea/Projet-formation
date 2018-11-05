@@ -23,7 +23,7 @@
 </head>
 <body>
 <?php
-    include 'menu.php';
+    include 'php/menu.php';
 ?>
     <ul>
         <?php

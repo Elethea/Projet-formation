@@ -1,0 +1,3 @@
+<Files menu.php>
+    deny from all
+<Files>
