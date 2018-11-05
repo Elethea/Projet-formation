@@ -6,31 +6,23 @@ if(isset($_POST['DeleteArticles'])){
     if(!filter_var($_POST['DeleteArticles'], FILTER_VALIDATE_INT)){
         $errors[] = "Veuillez entrer un entier";
     }
-    try{
-        $bdd = new PDO('mysql:host=localhost;dbname=projet;charset=utf8', 'root', '');
-    } catch (Exception $e){
-        Die('Error');
+    if (!isset($errors)){
+        try{
+            $bdd = new PDO('mysql:host=localhost;dbname=projet;charset=utf8', 'root', '');
+        } catch (Exception $e){
+            Die('Error');
+        }
+        $response = $bdd->prepare('DELETE FROM articles WHERE id = :id ');
+        $response->bindValue('id', $_POST['DeleteArticles'], PDO::PARAM_INT);
+        $response->execute();
+        if($response->rowCount() != 1){
+            $errors[] =  "Veuillez recommencer une erreur est survenu";
+        } else {
+            $success = "l\'articles à bien été supprimé";
+        }
     }
-    $response = $bdd->prepare('DELETE FROM articles WHERE id = :id ');
-    $response->bindValue('id', $_POST['DeleteArticles'], PDO::PARAM_INT);
-    $response->execute();
-    if($response->rowCount() != 1){
-        echo "Veuillez recommencer une erreur est survenu";
-    } else {
-        $success = "l\'articles à bien été supprimé";
-    }
-
-
-
-} 
-
-
-
-
-
+}
 ?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
