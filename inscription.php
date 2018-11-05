@@ -51,9 +51,9 @@
 
             // Si account est vide, c'est que l'email n'est pas utilisée, sinon erreur
             if(empty($account)){
-
+                $token = md5(rand().time().uniqid());
                 // Insertion du nouveau compte en BDD
-                $response = $bdd->prepare('INSERT INTO users(email, password, lastname, firstname, ip, insc_date) VALUES(?,?,?,?,?,?)');
+                $response = $bdd->prepare('INSERT INTO users(email, password, lastname, firstname, ip, insc_date, token) VALUES(?,?,?,?,?,?,?)');
 
                 $response->execute(array(
                     $_POST['email'],
@@ -61,12 +61,14 @@
                     $_POST['name'],
                     $_POST['firstname'],
                     $client_IP,
-                    time()
+                    time(),
+                    $token
                 ));
 
                 // Si la requête SQL a touchée au moins 1 ligne tout vas bien, sinon erreur
                 if($response->rowCount() > 0){
-                    $success = 'Compte créé !';
+                    require ('php/email.php');
+                    $success = 'Un mail vous a été envoyer';
                 } else {
                     $errors[] = 'Problème lors de la création du compte.';
                 }

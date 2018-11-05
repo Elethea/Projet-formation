@@ -18,27 +18,29 @@ SESSION_start();
 
             $bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-            $getUser = $bdd->prepare('SELECT email, password, insc_date, firstname, lastname FROM users WHERE email= :email');
+            $getUser = $bdd->prepare('SELECT email, password, insc_date, firstname, lastname, is_active, id FROM users WHERE email= :email');
             $getUser->bindValue('email', $_POST['email']);
             $getUser->execute();
 
             $user = $getUser -> fetch(PDO::FETCH_ASSOC);
 
-            if(!empty($user)){
-                if(password_verify($_POST['password'], $user['password'])){
-                        $_SESSION['account']['email'] = $_POST['email'];
-                        $_SESSION['account']['name'] = $user['lastname'];
-                        $_SESSION['account']['firstname'] = $user['firstname'];
-                        $_SESSION['account']['date'] = $user['insc_date'];
-
-                        $success = 'Vous êtes connecter';
-                    } else {
-                        $errors[] = 'Mot de passe invalide';
-                }
-            }else{
-                $errors[] = 'Il n\'existe pas de compte avec cet email';
+            if(empty($user)){
+                $errors[] = 'Adresse mail incorrect';
             }
-
+            if ($user['is_active'] == 0){
+                $errors[] = 'Votre compte n\'est pas actif';
+            }
+            if (!password_verify($_POST['password'], $user['password'])){
+                $errors[] = 'Mot de passe incorrect';
+            }
+            if (!isset($errors)){
+                $_SESSION['account']['email'] = $_POST['email'];
+                $_SESSION['account']['name'] = $user['lastname'];
+                $_SESSION['account']['firstname'] = $user['firstname'];
+                $_SESSION['account']['date'] = $user['insc_date'];
+                $_SESSION['account']['id'] = $user['id'];
+                $success = 'Vous êtes connecter';
+            }
         }
     }
 ?>

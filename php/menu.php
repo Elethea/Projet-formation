@@ -7,6 +7,7 @@
         ?>
         <li><a href="inscription.php">Inscription</a></li>
         <li><a href="login.php">Connexion</a></li>
+        <li><a href="ask_password_reset.php">Modifier son mot de passe</a></li>
         <?php 
             } else {
         ?>
