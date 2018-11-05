@@ -1,15 +1,11 @@
 <?php
-    SESSION_start();
-    $_SESSION['email'] = 'cyrilcuvelier@sfr.fr';
-    $_SESSION['name'] = 'Cuvelier';
-    $_SESSION['firstname'] = 'Cyril';
-    $_SESSION['date'] = time();
-    if(isset($_SESSION['email']) && isset($_SESSION['name'])  && isset($_SESSION['firstname']) && isset($_SESSION['date'])){
+    session_start();
+    if(isset($_SESSION['account']['email']) && isset($_SESSION['account']['name'])  && isset($_SESSION['account']['firstname']) && isset($_SESSION['account']['date'])){
         $user_data = array(
-            'email' => $_SESSION['email'],
-            'name' => $_SESSION['name'],
-            'firstname' => $_SESSION['firstname'],
-            'date' => date('d-m-Y', $_SESSION['date'])
+            'email' => $_SESSION['account']['email'],
+            'name' => $_SESSION['account']['name'],
+            'firstname' => $_SESSION['account']['firstname'],
+            'date' => $_SESSION['account']['date']
         );
     }
 ?>
@@ -27,7 +23,11 @@
 ?>
     <ul>
         <?php
-            echo '<li>Adresse mail : '. $user_data['email'] .'</li><li>Nom : '. $user_data['name'] .'</li><li>Prénom : '. $user_data['firstname'] .'</li><li>Date d\'inscription : '. $user_data['date'] .'</li>';
+            if (isset($user_data)){
+                echo '<li>Adresse mail : '. $user_data['email'] .'</li><li>Nom : '. $user_data['name'] .'</li><li>Prénom : '. $user_data['firstname'] .'</li><li>Date d\'inscription : '. date('d-m-Y', $user_data['date']) .'</li>';
+            } else {
+                echo 'Vous n\'êtes pas connecté';
+            }
         ?>
     </ul>
 </body>

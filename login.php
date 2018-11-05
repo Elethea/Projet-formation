@@ -1,4 +1,5 @@
 <?php
+SESSION_start();
     if(isset($_POST['email'], $_POST['password'])){
         if(!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)){
             $errors[] = 'Email non valide';
@@ -22,14 +23,14 @@
             $getUser->execute();
 
             $user = $getUser -> fetch(PDO::FETCH_ASSOC);
+            var_dump($user);
 
             if(!empty($user)){
                 if(password_verify($_POST['password'], $user['password'])){
-                        SESSION_start();
-                        $_SESSION['email'] = $_POST['email'];
-                        $_SESSION['name'] = $user['lastname'];
-                        $_SESSION['firstname'] = $user['firstname'];
-                        $_SESSION['date'] = $user['insc_date'];
+                        $_SESSION['account']['email'] = $_POST['email'];
+                        $_SESSION['account']['name'] = $user['lastname'];
+                        $_SESSION['account']['firstname'] = $user['firstname'];
+                        $_SESSION['account']['date'] = $user['insc_date'];
 
                         $success = 'Vous êtes connecter';
                     } else {
@@ -48,10 +49,11 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>Document</title>
+        <title>se connecter</title>
     </head>
     <body>
     <?php
+     include 'php/menu.php';
     if(!isset($success)){
     ?>
         <form action="login.php" method="post">
@@ -66,7 +68,7 @@
             }
         }
     } else {
-        echo '$success';
+        echo $success;
     }
     ?>
     </body>

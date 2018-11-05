@@ -11,7 +11,9 @@ unset($_SESSION['account']);
     <title>Projet 2J</title>
 </head>
 <body>
+    <?php
+        include 'php/menu.php';
+    ?>
     <h1>Vous êtes désormais déconnecté</h1>
-    <a href="index.php"><input type="submit" value="Retour à l'accueil"></a>
 </body>
 </html>
