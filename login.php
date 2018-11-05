@@ -30,7 +30,7 @@ $client_IP = $_SERVER['REMOTE_ADDR'];
 
             $bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-            $getUser = $bdd->prepare('SELECT email, password, insc_date, firstname, lastname, is_active, id FROM users WHERE email= :email');
+            $getUser = $bdd->prepare('SELECT email, password, insc_date, firstname, lastname, is_active, id, statut FROM users WHERE email= :email');
             $getUser->bindValue('email', $_POST['email']);
             $getUser->execute();
 
@@ -51,6 +51,7 @@ $client_IP = $_SERVER['REMOTE_ADDR'];
                 $_SESSION['account']['firstname'] = $user['firstname'];
                 $_SESSION['account']['date'] = $user['insc_date'];
                 $_SESSION['account']['id'] = $user['id'];
+                $_SESSION['account']['statut'] = $user['statut'];
                 $success = 'Vous êtes connecter';
             }
         }

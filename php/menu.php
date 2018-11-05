@@ -14,6 +14,7 @@
         <li><a href="logout.php">Déconnexion</a></li>
         <li><a href="profil.php">Profil</a></li>
         <li><a href="pagination.php">Articles</a></li>
+        <li><a href="admin.php">Admin</a></li>
         <?php
             }
         ?>
