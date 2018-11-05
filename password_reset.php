@@ -10,7 +10,6 @@
         }
         if (isset($_POST['new_password'])){
             if (!preg_match('#^.{5,500}$#', $_POST['new_password'])){
-                
                 $errors[] = 'nouveau mot de passe incorrect';
             } else {
                 $response = $bdd->prepare('UPDATE users SET password = ? WHERE email = ?');
@@ -18,6 +17,9 @@
                     password_hash($_POST['new_password'], PASSWORD_BCRYPT),
                     $_GET['email']
                 ));
+                if ($response->rowCount() == 1){
+                    $succes = 'Mdp modifié';
+                }
             }
         } else {
             $response = $bdd->prepare('SELECT token FROM users WHERE email = ?');
@@ -42,7 +44,7 @@
 <body>
     <?php 
     include 'php/menu.php';
-        if (!isset($_POST['new_password'])){
+            if (!isset($succes)){
             if (isset($_GET['email']) && isset($_GET['token'])){
                 echo '<form action="password_reset.php?email='. $_GET['email'] .'&token='. $_GET['token'] .'" method="POST">';
             }
@@ -52,7 +54,15 @@
                 <input type="submit">
             </form>
         <?php
-        }
+        if (isset($errors)){
+            foreach($errors as $error){
+                echo '<p>'. $error .'</p>';
+            }
+        }    
+    } else {
+        echo $succes;
+    }
+    
     ?>
 </body>
 </html>

@@ -25,7 +25,9 @@ if (isset($_POST['email'])){
                 require 'php/email_reset.php';
                 $success = 'Un mail vous a été envoyer';
             }
-        }
+        } else {
+            $errors[] = 'mail inexistant';
+            }
     }
 }
 
@@ -48,6 +50,11 @@ include 'php/menu.php';
         <input type="submit">
     </form>
     <?php
+    if (isset($errors)){
+        foreach($errors as $error){
+            echo '<p>'. $error .'</p>';
+        }
+    }
     } else {
         echo $success;
     }

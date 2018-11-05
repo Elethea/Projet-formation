@@ -36,7 +36,6 @@ $client_IP = $_SERVER['REMOTE_ADDR'];
 
             $user = $getUser -> fetch(PDO::FETCH_ASSOC);
 
-<<<<<<< HEAD
             if(empty($user)){
                 $errors[] = 'Adresse mail incorrect';
             }
@@ -53,21 +52,6 @@ $client_IP = $_SERVER['REMOTE_ADDR'];
                 $_SESSION['account']['date'] = $user['insc_date'];
                 $_SESSION['account']['id'] = $user['id'];
                 $success = 'Vous êtes connecter';
-=======
-            if(!empty($user)){
-                if(password_verify($_POST['password'], $user['password'])){
-                    $_SESSION['account']['email'] = $_POST['email'];
-                    $_SESSION['account']['name'] = $user['lastname'];
-                    $_SESSION['account']['firstname'] = $user['firstname'];
-                    $_SESSION['account']['date'] = $user['insc_date'];
-
-                    $success = 'Vous êtes connecter';
-                } else {
-                    $errors[] = 'Mot de passe invalide';
-                }
-            }else{
-                $errors[] = 'Il n\'existe pas de compte avec cet email';
->>>>>>> origin/master
             }
         }
     }
