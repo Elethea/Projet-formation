@@ -2,7 +2,7 @@
     <ul>
         <li><a href="index.php">Acceuil</a></li>
         <?php
-            if (empty($_SESSION['account']))
+            if (!isset($_SESSION['account']))
             {
         ?>
         <li><a href="inscription.php">Inscription</a></li>
