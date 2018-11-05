@@ -30,7 +30,6 @@ SESSION_start();
             $getUser->execute();
 
             $user = $getUser -> fetch(PDO::FETCH_ASSOC);
-            var_dump($user);
 
             if(!empty($user)){
                 if(password_verify($_POST['password'], $user['password'])){
@@ -65,7 +64,7 @@ SESSION_start();
     if(!isset($success)){
     ?>
         <form action="login.php" method="post">
-            <input type="email" placeholder="BobMoran@gmail.com" name="email" required>
+            <input type="email" placeholder="email@exemple.com" name="email" required>
             <input type="password" name="password"  required>
             <div class="g-recaptcha" data-sitekey="6LeG8HcUAAAAAI9YCD0ZZnModHfaTm8o5irfoKYW"></div>
             <input type="submit" value="Connexion">
