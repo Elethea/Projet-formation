@@ -1,5 +1,9 @@
 <?php
 session_start();
+if(!isset($_SESSION['account'])){
+    header("Location index.php");
+    exit();
+}
 if(isset($_GET['id']) AND filter_var($_GET['id'], FILTER_VALIDATE_INT) AND $_GET['id'] >= 1){
     $articleId = $_GET['id'];
 } else {

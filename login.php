@@ -53,6 +53,7 @@ $client_IP = $_SERVER['REMOTE_ADDR'];
                 $_SESSION['account']['id'] = $user['id'];
                 $_SESSION['account']['statut'] = $user['statut'];
                 $success = 'Vous êtes connecter';
+                var_dump($_SESSION['account']);
             }
         }
     }
