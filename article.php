@@ -1,5 +1,6 @@
 <?php
 session_start();
+require('php/logoutauto.php');
 if(!isset($_SESSION['account'])){
     header("Location index.php");
     exit();

@@ -49,18 +49,23 @@ $client_IP = $_SERVER['REMOTE_ADDR'];
                 $errors[] = 'Mot de passe incorrect';
             }
             if (!isset($errors) && (time() >= $oui['co_time'])){
-                $_SESSION['account']['email'] = $_POST['email'];
-                $_SESSION['account']['name'] = $user['lastname'];
-                $_SESSION['account']['firstname'] = $user['firstname'];
-                $_SESSION['account']['date'] = $user['insc_date'];
-                $_SESSION['account']['id'] = $user['id'];
-                $_SESSION['account']['statut'] = $user['statut'];
-                $_SESSION['account']['ip'] = $user['ip'];
+                $_SESSION['account']['email'] = htmlspecialchars($_POST['email']);
+                $_SESSION['account']['name'] = htmlspecialchars($user['lastname']);
+                $_SESSION['account']['firstname'] = htmlspecialchars($user['firstname']);
+                $_SESSION['account']['date'] = htmlspecialchars($user['insc_date']);
+                $_SESSION['account']['id'] = htmlspecialchars($user['id']);
+                $_SESSION['account']['statut'] = htmlspecialchars($user['statut']);
+                $_SESSION['account']['ip'] = htmlspecialchars($_SERVER['REMOTE_ADDR']);
+
+                if (!isset($_SESSION['account']['token'])){
+                    $_SESSION['account']['token'] = md5(bin2hex(openssl_random_pseudo_bytes(6)));
+                }
+
                 $success = 'Vous êtes connecter';
             } else{
                 $errors[] = "Connexion impossible vous êtes bloqué jusqu'à : ".date("H\h:i\m:s\s", $oui['co_time']);
             }
-        } 
+        }
         if(isset($errors)){
             if(isset($oui)){
                 if(time() >= $oui['co_time']){

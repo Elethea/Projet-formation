@@ -1,5 +1,9 @@
 <?php
+<<<<<<< HEAD
 // Vérification de la connexion à un compte et si il est connecter on le renvoi sur "Index.php"
+=======
+require('php/logoutauto.php');
+>>>>>>> 1c6f7a36946b1483dd431d1a732e02c25418cdb4
 if(isset($_SESSION['account'])){
     header("Location index.php");
     exit();

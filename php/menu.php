@@ -7,14 +7,14 @@
         ?>
         <li><a href="inscription.php">Inscription</a></li>
         <li><a href="login.php">Connexion</a></li>
-        <li><a href="ask_password_reset.php">Modifier son mot de passe</a></li>
+        <li><a href="ask_password_reset.php">Modifier son mot de passe / mdp oublié</a></li>
         <?php
             } else {
         ?>
         <li><a href="logout.php">Déconnexion</a></li>
         <li><a href="profil.php">Profil</a></li>
         <li><a href="pagination.php">Articles</a></li>
-        <li><a href="../admin/admin.php">Admin</a></li>
+        <li><a href="../admin/admin.php?token=<?php echo $_SESSION['account']['token']; ?>">Admin</a></li>
         <?php
             }
         ?>
