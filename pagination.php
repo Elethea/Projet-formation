@@ -1,5 +1,6 @@
 <?php
 session_start();
+require('php/logoutauto.php');
 if(!isset($_SESSION['account'])){
     header("Location index.php");
     exit();
@@ -70,13 +71,13 @@ $lastPage = ceil(count($numberOfArticles) / $articlesPerPage);
     </nav>
 
     <table>
-            <th>Titre</th>
-            <th>Auteur</th>
-            <th>Date</th>
-            <th>Liens</th>
     <?php
         foreach($showArticles as $articles){
-            echo '<tr><td>'.htmlspecialchars($articles['title']).'</td><td>'.htmlspecialchars($articles['author_id']).'</td><td>'.date('d-m-Y', $articles['creation_date']).'</td><td><a href="article.php?id='.$articles['id'].'">En savoir plus</a></td></tr>';
+            if($_SESSION['account']['statut'] == 1) {
+                echo '<tr><th>id</th><th>Titre</th><th>Auteur</th><th>Date</th><th>Lien</th></<tr><tr><td>'.htmlspecialchars($articles['id']).'</td><td>'.htmlspecialchars($articles['title']).'</td><td>'.htmlspecialchars($articles['author_id']).'</td><td>'.date('d-m-Y', $articles['creation_date']).'</td><td><a href="article.php?id='.$articles['id'].'">En savoir plus</a></td></tr>';
+            } else {
+                echo '<tr><th>Titre</th><th>Auteur</th><th>Date</th><th>Lien</th></<tr><tr><td>'.htmlspecialchars($articles['title']).'</td><td>'.htmlspecialchars($articles['author_id']).'</td><td>'.date('d-m-Y', $articles['creation_date']).'</td><td><a href="article.php?id='.$articles['id'].'">En savoir plus</a></td></tr>';
+            }
         }
     ?>
     </table>

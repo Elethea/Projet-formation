@@ -55,7 +55,7 @@ $client_IP = $_SERVER['REMOTE_ADDR'];
                 $_SESSION['account']['date'] = $user['insc_date'];
                 $_SESSION['account']['id'] = $user['id'];
                 $_SESSION['account']['statut'] = $user['statut'];
-                $_SESSION['account']['ip'] = $user['ip'];
+                $_SESSION['account']['ip'] = $_SERVER['REMOTE_ADDR'];
                 $success = 'Vous êtes connecter';
             } else{
                 $errors[] = "Connexion impossible vous êtes bloqué jusqu'à : ".date("H\h:i\m:s\s", $oui['co_time']);

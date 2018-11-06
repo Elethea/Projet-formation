@@ -1,4 +1,6 @@
 <?php
+session_start();
+require('php/logoutauto.php');
     if (isset($_GET['email']) && isset($_GET['token'])){
         if(!filter_var($_GET['email'], FILTER_VALIDATE_EMAIL)){
             $errors[] = 'mail incorrect';
