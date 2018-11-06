@@ -1,13 +1,13 @@
 <nav>
     <ul>
-        <li><a href="index.php">Acceuil</a></li>
+        <li><a href="../index.php">Acceuil</a></li>
         <?php
             if (!isset($_SESSION['account']))
             {
         ?>
-        <li><a href="inscription.php">Inscription</a></li>
-        <li><a href="login.php">Connexion</a></li>
-        <li><a href="ask_password_reset.php">Modifier son mot de passe</a></li>
+        <li><a href="../inscription.php">Inscription</a></li>
+        <li><a href="../login.php">Connexion</a></li>
+        <li><a href="../ask_password_reset.php">Modifier son mot de passe</a></li>
         <?php
             } else {
         ?>
