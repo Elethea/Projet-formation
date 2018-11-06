@@ -1,13 +1,13 @@
 <?php
 session_start();
 
-// On inclus notre fichier qui vérifie le niveau de droit de l'utilisateur dans la bdd
+// Fichier vérif droit admin
 require '../php/testadmin.php';
 
-// On verifie si le formulaire est bien remplis
+// Verif formulaire completer
 if(isset($_POST['title'], $_POST['content'], $_POST['id'])){
 
-    // On vérifie si le contenu du formulaire correspond à nos attentes
+    // Verif contenu correcte
     if(!preg_match('#^.{2,250}$#',$_POST['title'])){
         $errors[] = 'Votre titre est invalide';
     }
@@ -22,7 +22,7 @@ if(isset($_POST['title'], $_POST['content'], $_POST['id'])){
 
     if(!isset($errors)){
 
-        // Connexion à la BDD
+        // Connexion BDD
         try{
             $bdd = new PDO('mysql:host=localhost;dbname=projet;charset=utf8', 'root', '');
         } catch(Exception $e){
@@ -47,7 +47,7 @@ if(isset($_POST['title'], $_POST['content'], $_POST['id'])){
                 $_POST['id']
             ));
 
-            // Si la requête SQL a touchée au moins 1 ligne tout vas bien, sinon erreur
+            // Verif succès requête SQL
             if($response->rowCount() > 0){
                 $success = 'Article modifié avec succès';
             } else {
@@ -75,13 +75,13 @@ if(isset($_POST['title'], $_POST['content'], $_POST['id'])){
     <h1>Modification Article</h1>
 
     <?php
-    // Inclusion du menu avec les liens relatifs partant du dossier admin
+    // Inclusion menu liens relatifs dossier admin
     include '../php/menu_admin.php';
 
-    // On vérifie si la personne est bien admin et si le token de connexion est fournis
+    // Verif admin + présence token de connexion
     if($admin&& isset($_GET['token'])){
 
-        // On vérifie la véracité du cookie de connexion en le comparant à celui générer plus tôt
+        // Verif véracité token
         if($_GET['token'] == $_SESSION['account']['token']){
 
             // Si success n'existe pas, on affiche le formulaire, sinon on affiche success
@@ -95,18 +95,19 @@ if(isset($_POST['title'], $_POST['content'], $_POST['id'])){
         <input type="submit" value="Valider">
     </form>
     <?php
+            // Affichage succès
             } else {
                 echo '<p style="color:green;">' . $success . '</p>';
             }
 
-            // Si il y a des erreurs, on les affiches
+            // Affichage erreurs
             if(isset($errors)){
                 foreach($errors as $error){
                     echo '<p style="color:red;">' . $error . '</p>';
                 }
             }
 
-        // Si le token ne correspond pas on coupe toutes fonctionnalités php et affiche une erreur
+        // Stop PHP si token invalide
         }else {
             die('Jeton de session invalide');
         }
