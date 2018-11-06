@@ -11,12 +11,12 @@ session_start(); //Debut session
     if(isset($_POST['name']) && isset($_POST['firstname']) && isset($_POST['email']) && isset($_POST['password']) && isset($_POST['password_comfirm']) && isset($_POST['g-recaptcha-response'])){ //Si les les variable existe
 
         //Erreur ferification du formulaire
-        if(!isset($_POST['name'])){
-            $errors[] = 'votre nom est invalide';
+        if(!preg_match('#^[a-z\'\-]{2,50}$#i',$_POST['name'])){
+            $errors[] = 'Votre nom est invalide';
         }
 
-        if(!isset($_POST['firstname'])){
-            $errors[] = 'votre prénom est invalide';
+        if(!preg_match('#^[a-z\'\-]{2,50}$#i',$_POST['firstname'])){
+            $errors[] = 'Votre prénom est invalide';
         }
 
         if(!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)){
