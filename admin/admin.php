@@ -1,12 +1,9 @@
 <?php
 
     session_start();
-    require '../php/testadmin.php';
-    if(isset($_GET['token'])){
-        if($_GET['token'] != $_SESSION['account']['token']){
 
-        }
-    } else
+    // On inclus notre fichier qui vérifie le niveau de droit de l'utilisateur dans la bdd
+    require '../php/testadmin.php';
 
 ?>
 
@@ -20,8 +17,13 @@
 </head>
 <body>
 <?php
+    // Inclusion du menu avec les liens relatifs partant du dossier admin
     include "../php/menu_admin.php";
+
+    // On vérifie si la personne est bien admin et si le token de connexion est fournis
     if($admin && isset($_GET['token'])){
+
+        // On vérifie la véracité du cookie de connexion en le comparant à celui générer plus tôt
         if($_GET['token'] == $_SESSION['account']['token']){
 
 
@@ -30,6 +32,8 @@
     <a href="AdminCreate.php?token=<?php echo $_SESSION['account']['token']; ?>">Ajouter</a>
     <a href="AdminChange.php?token=<?php echo $_SESSION['account']['token']; ?>">Modifier</a>
     <?php
+
+        // Si le token ne correspond pas on coupe toutes fonctionnalités php et affiche une erreur
         }else {
             die('Jeton de session invalide');
         }

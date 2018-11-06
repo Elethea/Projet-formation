@@ -1,3 +1,4 @@
+<!-- Ceci est une barre de navigation avec les liens relatifs sortant du dossier admin -->
 <nav>
     <ul>
         <li><a href="../index.php">Acceuil</a></li>

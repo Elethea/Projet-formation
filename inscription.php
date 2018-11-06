@@ -1,15 +1,16 @@
 <?php
-session_start();
+session_start(); //Debut session
     if(isset($_SESSION['account'])){
         header("Location index.php");
         exit();
     }
-    require('php/recaptcha_valid.php');
+    require('php/recaptcha_valid.php'); //insersion du recapcha validation
 
-    $client_IP = $_SERVER['REMOTE_ADDR'];
+    $client_IP = $_SERVER['REMOTE_ADDR']; //recupération de l'addresse IP
 
-    if(isset($_POST['name']) && isset($_POST['firstname']) && isset($_POST['email']) && isset($_POST['password']) && isset($_POST['password_comfirm']) && isset($_POST['g-recaptcha-response'])){
+    if(isset($_POST['name']) && isset($_POST['firstname']) && isset($_POST['email']) && isset($_POST['password']) && isset($_POST['password_comfirm']) && isset($_POST['g-recaptcha-response'])){ //Si les les variable existe
 
+        //Erreur ferification du formulaire
         if(!isset($_POST['name'])){
             $errors[] = 'votre nom est invalide';
         }
@@ -34,7 +35,7 @@ session_start();
             $errors[] = 'Recaptcha invalide';
         }
 
-        if(!isset($errors)){
+        if(!isset($errors)){ //si il y a pas d'erreur 
 
             // Connexion à la BDD
             try{
@@ -42,7 +43,7 @@ session_start();
             } catch(Exception $e){
                 die('Erreur de connexion à la bdd');
             }
-            $bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); 
     
             // Selection du compte (hypothétique) ayant déjà l'adresse email dans le formulaire
             $verifyIfExist = $bdd->prepare('SELECT * FROM users WHERE email = ?');
@@ -56,15 +57,16 @@ session_start();
             // Si account est vide, c'est que l'email n'est pas utilisée, sinon erreur
             if(empty($account)){
                 $token = md5(rand().time().uniqid());
+
                 // Insertion du nouveau compte en BDD
                 $response = $bdd->prepare('INSERT INTO users(email, password, lastname, firstname, ip, insc_date, token) VALUES(?,?,?,?,?,?,?)');
 
                 $response->execute(array(
                     $_POST['email'],
-                    password_hash($_POST['password'], PASSWORD_BCRYPT),
+                    password_hash($_POST['password'], PASSWORD_BCRYPT), //crypte le mot de passe
                     $_POST['name'],
                     $_POST['firstname'],
-                    $client_IP,
+                    $client_IP, //ajpoute l'IP
                     time(),
                     $token
                 ));
@@ -72,13 +74,13 @@ session_start();
                 // Si la requête SQL a touchée au moins 1 ligne tout vas bien, sinon erreur
                 if($response->rowCount() > 0){
                     require ('php/email.php');
-                    $success = 'Un mail vous a été envoyer';
+                    $success = 'Un mail vous a été envoyer'; //succes si le mail a bien été envoyer
                 } else {
                     $errors[] = 'Problème lors de la création du compte.';
                 }
 
             } else {
-                $errors[] = 'Email déjà utilisée';
+                $errors[] = 'Email déjà utilisée'; //Erreur si l'email est déja utilisé
             }
 
 
@@ -87,19 +89,19 @@ session_start();
 
 ?>
 
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <script src='https://www.google.com/recaptcha/api.js'></script>
+    <script src='https://www.google.com/recaptcha/api.js'></script> <!--Ajout du script google ReCapchat-->
     <title>Inscription</title>
 </head>
 <body>
     <?php
     include 'php/menu.php';
-    // Si success n'existe pas, on affiche le formulaire, sinon ona ffiche success
+
     if(!isset($success)){
 
     ?>
@@ -110,12 +112,12 @@ session_start();
         <input type="text" placeholder="adresse mail" name="email">
         <input type="text" placeholder="Mot de passe" name="password">
         <input type="text" placeholder="comfirmation" name="password_comfirm">
-        <div class="g-recaptcha" data-sitekey="6LeG8HcUAAAAAI9YCD0ZZnModHfaTm8o5irfoKYW"></div>
+        <div class="g-recaptcha" data-sitekey="6LeG8HcUAAAAAI9YCD0ZZnModHfaTm8o5irfoKYW"></div> <!--div du re Captchat -->
         <input type="submit" value="S'inscrire">
     </form>
     <?php
     } else {
-        echo '<p style="color:green;">' . $success . '</p>';
+        echo '<p style="color:green;">' . $success . '</p>'; //Aficche les erreur
     }
     
     // Si il y a des erreurs, on les affiches
