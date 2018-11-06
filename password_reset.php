@@ -13,7 +13,11 @@ require('php/logoutauto.php');
         if (isset($_POST['new_password'])){
             if (!preg_match('#^.{5,500}$#', $_POST['new_password'])){
                 $errors[] = 'nouveau mot de passe incorrect';
-            } else {
+            }
+            if ($_POST['new_password'] != $_POST['new_passwordConfirm']){
+                $errors[] = 'Mot de passe différents';
+            }
+            if (!isset($errors)) {
                 $response = $bdd->prepare('UPDATE users SET password = ? WHERE email = ?');
                 $response->execute(array(
                     password_hash($_POST['new_password'], PASSWORD_BCRYPT),
@@ -36,7 +40,7 @@ require('php/logoutauto.php');
     }
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -53,6 +57,7 @@ require('php/logoutauto.php');
                 echo '<form action="password_reset.php" method="POST">';
             ?>
                 <input type="text" placeholder="nouveau mot de passe" name="new_password">
+                <input type="text" placeholder="Confirmation" name="new_passwordConfirm">
                 <input type="submit">
             </form>
         <?php
