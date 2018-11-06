@@ -42,7 +42,6 @@ $showArticle= $getArticle->fetch(PDO::FETCH_ASSOC);
         <p><?php echo htmlspecialchars($showArticle['author_id'])?></p>
         <p><?php echo date('m-d-Y', htmlspecialchars($showArticle['creation_date']))?></p>
         <a href="pagination.php?page=1">Retour</a>
-        lorem*5000
     </main>
 </body>
 </html>
