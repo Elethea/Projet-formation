@@ -1,7 +1,7 @@
 <?php
 session_start();
     if(isset($_SESSION['account'])){
-        header("Location: projet/Projet-formation/index.php");
+        header("Location index.php");
         exit();
     }
     require('php/recaptcha_valid.php');

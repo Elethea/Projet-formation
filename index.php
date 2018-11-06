@@ -1,16 +1,6 @@
 <?php
-// $productsPerPage = 10;
-// try{
-//     $bdd = new PDO('mysql:host=localhost;dbname=projet;charset=utf8', 'root', '');
-// } catch(Exception $e){
-//     die('Erreur de connexion à la bdd');
-// }
-//     $response = $bdd->prepare('SELECT * FROM products LIMIT :limit ORDER BY p_price ASC');
-//     $response->bindValue(':limit', $productsPerPage, PDO::PARAM_INT);
-//     $response->execute();
-//     $productsToShow = $response->fetchAll(PDO::FETCH_ASSOC);
-//     var_dump($productsToShow);
-// ?>
+    session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,10 +8,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Accueil</title>
+    <style>
+        h1{
+            font-size : 3rem;
+            font-weight : bold;
+            color : red;
+            text-align : center;
+        }
+    </style>
 </head>
 <body>
 <?php
     include 'php/menu.php';
+?>
+<h1>Bienvenue sur la page d'acceuil.</h1>
+<?php 
+    include 'php/display_user.php';
 ?>
 </body>
 </html>
