@@ -44,7 +44,7 @@
 <body>
 <?php
     include "../php/menu_admin.php";
-    if($admin&& isset($_GET['token']){
+    if($admin&& isset($_GET['token'])){
         if($_GET['token'] == $_SESSION['account']['token']){
 
 
@@ -62,7 +62,7 @@
 
             }
         }else {
-            die('Jeton de session invalide')
+            die('Jeton de session invalide');
         }
     } ?>
 </body>

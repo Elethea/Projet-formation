@@ -28,10 +28,10 @@
 ?>
     <a href="AdminDelete.php?token=<?php echo $_SESSION['account']['token']; ?>">Suprimer</a>
     <a href="AdminCreate.php?token=<?php echo $_SESSION['account']['token']; ?>">Ajouter</a>
-    <a href=""></a>
+    <a href="AdminChange.php?token=<?php echo $_SESSION['account']['token']; ?>"></a>
     <?php
         }else {
-            die('Jeton de session invalide')
+            die('Jeton de session invalide');
         }
     } ?>
 </body>
