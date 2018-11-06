@@ -1,5 +1,9 @@
 <?php
 session_start();
+if(!isset($_SESSION['account'])){
+    header("Location index.php");
+    exit();
+}
 unset($_SESSION['account']);
 ?>
 <!DOCTYPE html>
