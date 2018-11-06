@@ -2,6 +2,11 @@
 
     session_start();
     require '../php/testadmin.php';
+    if(isset($_GET['token'])){
+        if($_GET['token'] != $_SESSION['account']['token']){
+
+        }
+    } else
 
 ?>
 
@@ -16,13 +21,18 @@
 <body>
 <?php
     include "../php/menu_admin.php";
-    if($admin){
+    if($admin && isset($_GET['token']){
+        if($_GET['token'] == $_SESSION['account']['token']){
 
 
 ?>
-    <a href="AdminDelete.php">Suprimer</a>
-    <a href="AdminCreate.php">Ajouter</a>
+    <a href="AdminDelete.php?token=<?php echo $_SESSION['account']['token']; ?>">Suprimer</a>
+    <a href="AdminCreate.php?token=<?php echo $_SESSION['account']['token']; ?>">Ajouter</a>
     <a href=""></a>
-    <?php } ?>
+    <?php
+        }else {
+            die('Jeton de session invalide')
+        }
+    } ?>
 </body>
 </html>

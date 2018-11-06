@@ -34,21 +34,28 @@ if(isset($_POST['DeleteArticles'])){
 <body>
     <?php
     include '../php/menu_admin.php';
-    if($admin){?>
+
+    if($admin&& isset($_GET['token']){
+        if($_GET['token'] == $_SESSION['account']['token']){?>
+
 <form action="AdminDelete.php" method="POST">
     <input type="text" name="DeleteArticles" placeholder="Entrer un numéro d'articles pour le supprimer">
     <input type="submit" name="delete" value="Delete">
 </form>
 
     <?php
-    if(isset($errors)){
-        foreach($errors as $error){
-            echo $error;
+
+            if(isset($errors)){
+                foreach($errors as $error){
+                    echo $error;
+                }
+            }
+            if (isset($succes)){
+                echo $succes;
+            }
+        }else {
+            die('Jeton de session invalide')
         }
-    }
-    if (isset($succes)){
-        echo $succes;
-    }
-} ?>
+    } ?>
 </body>
 </html>

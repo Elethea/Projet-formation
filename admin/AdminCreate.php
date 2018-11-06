@@ -44,7 +44,8 @@
 <body>
 <?php
     include "../php/menu_admin.php";
-    if($admin){
+    if($admin&& isset($_GET['token']){
+        if($_GET['token'] == $_SESSION['account']['token']){
 
 
 ?>
@@ -54,12 +55,15 @@
             <input type="submit">
         </form>
 <?php
-    if(isset($errors)){
-        foreach ($errors as $error){
-            echo $error;
-        }
+            if(isset($errors)){
+                foreach ($errors as $error){
+                    echo $error;
+                }
 
-    }
-} ?>
+            }
+        }else {
+            die('Jeton de session invalide')
+        }
+    } ?>
 </body>
 </html>

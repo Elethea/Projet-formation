@@ -56,11 +56,16 @@ $client_IP = $_SERVER['REMOTE_ADDR'];
                 $_SESSION['account']['id'] = $user['id'];
                 $_SESSION['account']['statut'] = $user['statut'];
                 $_SESSION['account']['ip'] = $_SERVER['REMOTE_ADDR'];
+
+                if (!isset($_SESSION['account']['token'])){
+                    $_SESSION['account']['token'] = md5(bin2hex(openssl_random_pseudo_bytes(6)));
+                }
+
                 $success = 'Vous êtes connecter';
             } else{
                 $errors[] = "Connexion impossible vous êtes bloqué jusqu'à : ".date("H\h:i\m:s\s", $oui['co_time']);
             }
-        } 
+        }
         if(isset($errors)){
             if(isset($oui)){
                 if(time() >= $oui['co_time']){

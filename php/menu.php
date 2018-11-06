@@ -14,7 +14,7 @@
         <li><a href="logout.php">Déconnexion</a></li>
         <li><a href="profil.php">Profil</a></li>
         <li><a href="pagination.php">Articles</a></li>
-        <li><a href="../admin/admin.php">Admin</a></li>
+        <li><a href="../admin/admin.php?token=<?php echo $_SESSION['account']['token']; ?>">Admin</a></li>
         <?php
             }
         ?>
