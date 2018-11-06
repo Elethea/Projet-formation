@@ -1,7 +1,7 @@
-<?php 
+<?php
 
     session_start();
-    require 'php/testadmin.php';
+    require '../php/testadmin.php';
 
 ?>
 
@@ -14,11 +14,11 @@
     <title>Administrateur</title>
 </head>
 <body>
-<?php 
-    include "php/menu.php";
+<?php
+    include "../php/menu_admin.php";
     if($admin){
 
-    
+
 ?>
     <a href="AdminDelete.php">Suprimer</a>
     <a href="AdminCreate.php">Ajouter</a>

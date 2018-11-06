@@ -1,4 +1,9 @@
 <?php
+session_start();
+if(!isset($_SESSION['account'])){
+    header("Location index.php");
+    exit();
+}
 $articlesPerPage = 10;
 
 if(isset($_GET['page']) AND filter_var($_GET['page'], FILTER_VALIDATE_INT) AND $_GET['page'] >= 1){
@@ -71,7 +76,7 @@ $lastPage = ceil(count($numberOfArticles) / $articlesPerPage);
             <th>Liens</th>
     <?php
         foreach($showArticles as $articles){
-            echo '<tr><td>'.htmlspecialchars($articles['title']).'</td><td>'.htmlspecialchars($articles['author_id']).'</td><td>'.strtotime($articles['creation_date']).'</td><td><a href="article.php?id='.$articles['id'].'">En savoir plus</a></td></tr>';
+            echo '<tr><td>'.htmlspecialchars($articles['title']).'</td><td>'.htmlspecialchars($articles['author_id']).'</td><td>'.date('d-m-Y', $articles['creation_date']).'</td><td><a href="article.php?id='.$articles['id'].'">En savoir plus</a></td></tr>';
         }
     ?>
     </table>

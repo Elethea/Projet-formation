@@ -1,4 +1,8 @@
 <?php
+if(isset($_SESSION['account'])){
+    header("Location index.php");
+    exit();
+}
 if (isset($_POST['email'])){
     if(!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)){
         $errors[] = 'mail incorrect';
