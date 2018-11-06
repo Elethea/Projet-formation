@@ -67,10 +67,12 @@ $client_IP = $_SERVER['REMOTE_ADDR'];
         <title>se connecter</title>
         <script src='https://www.google.com/recaptcha/api.js'></script>
     </head>
+
     <body>
     <?php
-     include 'php/menu.php';
-    if(!isset($success)){
+        include 'php/menu.php';
+
+        if(!isset($success)){
     ?>
         <form action="login.php" method="post">
             <input type="email" placeholder="email@exemple.com" name="email" required>
@@ -79,14 +81,19 @@ $client_IP = $_SERVER['REMOTE_ADDR'];
             <input type="submit" value="Connexion">
         </form>
     <?php
+        }
+
         if(isset($errors)){
             foreach($errors as $error){
                 echo $error;
             }
+
+        } else {
+            if(isset($success)){
+                echo $success;
+            }
+
         }
-    } else {
-        echo $success;
-    }
     ?>
     </body>
 </html>
