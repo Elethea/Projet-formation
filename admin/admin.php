@@ -15,7 +15,7 @@
 </head>
 <body>
 <?php
-    include "../php/menu.php";
+    include "../php/menu_admin.php";
     if($admin){
 
 

@@ -33,7 +33,7 @@ if(isset($_POST['DeleteArticles'])){
 </head>
 <body>
     <?php
-    include '../php/menu.php';
+    include '../php/menu_admin.php';
     if($admin){?>
 <form action="AdminDelete.php" method="POST">
     <input type="text" name="DeleteArticles" placeholder="Entrer un numéro d'articles pour le supprimer">
