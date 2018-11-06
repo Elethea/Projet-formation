@@ -1,5 +1,6 @@
 <?php
     session_start();
+    require('php/logoutauto.php');
     if(isset($_SESSION['account']['email']) && isset($_SESSION['account']['name'])  && isset($_SESSION['account']['firstname']) && isset($_SESSION['account']['date'])){
         $user_data = array(
             'email' => $_SESSION['account']['email'],

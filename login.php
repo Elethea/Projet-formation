@@ -4,7 +4,6 @@ if(isset($_SESSION['account'])){
     header('Location: index.php');
     exit();
 }
-
 require('php/recaptcha_valid.php');
 $client_IP = $_SERVER['REMOTE_ADDR'];
 
@@ -20,22 +19,26 @@ $client_IP = $_SERVER['REMOTE_ADDR'];
         if(!recaptcha_valid($_POST['g-recaptcha-response'], $client_IP)){
             $errors[] = 'Recaptcha invalide';
         }
-
+        try{
+            $bdd = new PDO('mysql:host=localhost;dbname=projet;charset=utf8', 'root', '');
+        } catch(Exception $e) {
+            die('Erreur : '.$e->getMessage());
+        }
+        $response = $bdd->prepare('SELECT ip, tentative, co_time FROM users WHERE email = ?');
+        $response->execute(array(
+            $_POST['email']
+        ));
+        $oui = $response->fetch(PDO::FETCH_ASSOC);
         if(!isset($errors)){
-            try{
-                $bdd = new PDO('mysql:host=localhost;dbname=projet;charset=utf8', 'root', '');
-            } catch(Exception $e) {
-                die('Erreur : '.$e->getMessage());
-            }
+
 
             $bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-            $getUser = $bdd->prepare('SELECT email, password, insc_date, firstname, lastname, is_active, id, statut FROM users WHERE email= :email');
+            $getUser = $bdd->prepare('SELECT email, password, insc_date, firstname, lastname, is_active, id, statut, ip FROM users WHERE email= :email');
             $getUser->bindValue('email', $_POST['email']);
             $getUser->execute();
 
             $user = $getUser -> fetch(PDO::FETCH_ASSOC);
-
             if(empty($user)){
                 $errors[] = 'Adresse mail incorrect';
             }
@@ -45,14 +48,42 @@ $client_IP = $_SERVER['REMOTE_ADDR'];
             if (!password_verify($_POST['password'], $user['password'])){
                 $errors[] = 'Mot de passe incorrect';
             }
-            if (!isset($errors)){
+            if (!isset($errors) && (time() >= $oui['co_time'])){
                 $_SESSION['account']['email'] = $_POST['email'];
                 $_SESSION['account']['name'] = $user['lastname'];
                 $_SESSION['account']['firstname'] = $user['firstname'];
                 $_SESSION['account']['date'] = $user['insc_date'];
                 $_SESSION['account']['id'] = $user['id'];
                 $_SESSION['account']['statut'] = $user['statut'];
+                $_SESSION['account']['ip'] = $user['ip'];
                 $success = 'Vous êtes connecter';
+            } else{
+                $errors[] = "Connexion impossible vous êtes bloqué jusqu'à : ".date("H\h:i\m:s\s", $oui['co_time']);
+            }
+        } 
+        if(isset($errors)){
+            if(isset($oui)){
+                if(time() >= $oui['co_time']){
+                    if($oui['tentative'] == 10){
+                        $response = $bdd->prepare('UPDATE `users` SET tentative = :tenta , co_time = :time');
+                        $response->bindValue(':tenta', 0);
+                        $response->bindValue(':time', time()+(15*60), PDO::PARAM_INT);
+                        $response->execute();
+                    } else {
+                        if($client_IP == $oui['ip']){
+                            $response = $bdd->prepare('UPDATE `users` SET tentative= ?');
+                            $response->execute(array(
+                                $oui['tentative'] + 1
+                            ));
+                        } else{
+                            $response = $bdd->prepare('UPDATE `users` SET ip = ? , tentative = ?');
+                            $response->execute(array(
+                                $client_IP,
+                                0
+                            ));
+                        }
+                    }
+                }              
             }
         }
     }

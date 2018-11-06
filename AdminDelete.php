@@ -1,6 +1,8 @@
 <?php 
  session_start();
- require 'php/testadmin.php';
+ require('php/testadmin.php');
+ require('php/logoutauto.php');
+
 
 if(isset($_POST['DeleteArticles'])){
     if(!filter_var($_POST['DeleteArticles'], FILTER_VALIDATE_INT)){
@@ -19,15 +21,7 @@ if(isset($_POST['DeleteArticles'])){
     } else {
         $success = "l\'articles à bien été supprimé";
     }
-
-
-
 } 
-
-
-
-
-
 ?>
 
 
@@ -57,4 +51,4 @@ if(isset($_POST['DeleteArticles'])){
 } ?>
     
 </body>
-</html>
+</html>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
