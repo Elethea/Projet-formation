@@ -5,14 +5,6 @@
         header("Location index.php");
         exit();
     }
-    if(isset($_SESSION['account']['email']) && isset($_SESSION['account']['name'])  && isset($_SESSION['account']['firstname']) && isset($_SESSION['account']['date'])){
-        $user_data = array(
-            'email' => $_SESSION['account']['email'],
-            'name' => $_SESSION['account']['name'],
-            'firstname' => $_SESSION['account']['firstname'],
-            'date' => $_SESSION['account']['date']
-        );
-    }
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -29,7 +21,7 @@
     <ul>
         <?php
             if (isset($user_data)){
-                echo '<li>Adresse mail : '. $user_data['email'] .'</li><li>Nom : '. $user_data['name'] .'</li><li>Prénom : '. $user_data['firstname'] .'</li><li>Date d\'inscription : '. date('d-m-Y', $user_data['date']) .'</li>';
+                echo '<li>Adresse mail : '. htmlspecialchars($_SESSION['account']['email']) .'</li><li>Nom : '. htmlspecialchars($_SESSION['account']['name']) .'</li><li>Prénom : '. htmlspecialchars($_SESSION['account']['firstname']) .'</li><li>Date d\'inscription : '. date('d-m-Y', htmlspecialchars($_SESSION['account']['name'])) .'</li>';
             } else {
                 echo 'Vous n\'êtes pas connecté';
             }
