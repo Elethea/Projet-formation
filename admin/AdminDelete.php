@@ -1,6 +1,6 @@
-<?php 
+<?php
  session_start();
- require 'php/testadmin.php';
+ require '../php/testadmin.php';
 
 if(isset($_POST['DeleteArticles'])){
     if(!filter_var($_POST['DeleteArticles'], FILTER_VALIDATE_INT)){
@@ -24,7 +24,7 @@ if(isset($_POST['DeleteArticles'])){
 }
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -32,8 +32,8 @@ if(isset($_POST['DeleteArticles'])){
     <title>Document</title>
 </head>
 <body>
-    <?php 
-    include 'php/menu.php';
+    <?php
+    include '../php/menu.php';
     if($admin){?>
 <form action="AdminDelete.php" method="POST">
     <input type="text" name="DeleteArticles" placeholder="Entrer un numéro d'articles pour le supprimer">
@@ -45,11 +45,10 @@ if(isset($_POST['DeleteArticles'])){
         foreach($errors as $error){
             echo $error;
         }
-    } 
+    }
     if (isset($succes)){
         echo $succes;
     }
 } ?>
-    
 </body>
 </html>

@@ -1,7 +1,7 @@
-<?php 
+<?php
 
     session_start();
-    require 'php/testadmin.php';
+    require '../php/testadmin.php';
 
     if(isset($_POST['title']) && isset($_POST['content'])){
 
@@ -42,8 +42,8 @@
     <title>Administrateur/create</title>
 </head>
 <body>
-<?php 
-    include "php/menu.php";
+<?php
+    include "../php/menu.php";
     if($admin){
 
 
@@ -53,12 +53,12 @@
             <input type="text" name="content">
             <input type="submit">
         </form>
-<?php 
+<?php
     if(isset($errors)){
         foreach ($errors as $error){
             echo $error;
         }
-        
+
     }
 } ?>
 </body>
