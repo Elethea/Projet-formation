@@ -78,7 +78,7 @@ if(isset($_POST['title'], $_POST['content'], $_POST['id'])){
             if(!isset($success)){
 
     ?>
-    <form action="modif.php" method="POST">
+    <form action="adminChange.php" method="POST">
         <input type="text" name="id" placeholder="Id de l'article à modifier">
         <input type="text" name="title" placeholder="Titre">
         <input type="text" name="content" placeholder="Contenu">

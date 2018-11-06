@@ -21,14 +21,14 @@
 <body>
 <?php
     include "../php/menu_admin.php";
-    if($admin && isset($_GET['token']){
+    if($admin && isset($_GET['token'])){
         if($_GET['token'] == $_SESSION['account']['token']){
 
 
 ?>
     <a href="AdminDelete.php?token=<?php echo $_SESSION['account']['token']; ?>">Suprimer</a>
     <a href="AdminCreate.php?token=<?php echo $_SESSION['account']['token']; ?>">Ajouter</a>
-    <a href="AdminChange.php?token=<?php echo $_SESSION['account']['token']; ?>"></a>
+    <a href="AdminChange.php?token=<?php echo $_SESSION['account']['token']; ?>">Modifier</a>
     <?php
         }else {
             die('Jeton de session invalide');
